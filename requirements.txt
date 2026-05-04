@@ -1,0 +1,11 @@
+mediapipe
+opencv-python
+scikit-learn
+tensorflow
+numpy
+pandas
+matplotlib
+seaborn
+pyttsx3
+Pillow
+pyinstaller
