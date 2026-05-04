@@ -23,7 +23,6 @@ import mediapipe as mp
 from mediapipe.tasks import python as mp_python
 from mediapipe.tasks.python.vision import HandLandmarker, HandLandmarkerOptions, RunningMode
 
-# ── Config ──────────────────────────────────────────────────────────────────
 DATASET_PATH = "data/landmarks/dataset.csv"
 MODEL_PATH   = "models/alphabet_model.pkl"
 ENCODER_PATH = "models/label_encoder.pkl"
@@ -32,7 +31,7 @@ HAND_MODEL   = "hand_landmarker.task"
 
 def load_data():
     """Charge et prépare le dataset."""
-    print("📂 Chargement du dataset...")
+    print("Chargement du dataset...")
     df = pd.read_csv(DATASET_PATH)
     print(f"   {len(df)} échantillons | {df['label'].nunique()} classes")
     print(f"   Classes : {sorted(df['label'].unique())}")
@@ -50,7 +49,7 @@ def train(X, y):
         X, y_enc, test_size=0.2, random_state=42, stratify=y_enc
     )
 
-    print("\n🧠 Entraînement du Random Forest...")
+    print("\nEntraînement du Random Forest...")
     model = RandomForestClassifier(
         n_estimators=200,
         max_depth=None,
@@ -61,8 +60,8 @@ def train(X, y):
 
     y_pred = model.predict(X_test)
     acc = (y_pred == y_test).mean()
-    print(f"\n✅ Précision globale : {acc*100:.1f}%")
-    print("\n📊 Rapport par classe :")
+    print(f"\nPrécision globale : {acc*100:.1f}%")
+    print("\nRapport par classe :")
     print(classification_report(y_test, y_pred, target_names=le.classes_))
 
     # Matrice de confusion
@@ -75,7 +74,7 @@ def train(X, y):
     plt.xlabel("Prédit")
     plt.tight_layout()
     plt.savefig("models/confusion_matrix.png", dpi=150)
-    print("   📈 Matrice sauvegardée dans models/confusion_matrix.png")
+    print("    Matrice sauvegardée dans models/confusion_matrix.png")
 
     return model, le
 
@@ -87,8 +86,8 @@ def save_model(model, le):
         pickle.dump(model, f)
     with open(ENCODER_PATH, 'wb') as f:
         pickle.dump(le, f)
-    print(f"\n💾 Modèle sauvegardé : {MODEL_PATH}")
-    print(f"💾 Encodeur sauvegardé : {ENCODER_PATH}")
+    print(f"\nModèle sauvegardé : {MODEL_PATH}")
+    print(f"Encodeur sauvegardé : {ENCODER_PATH}")
 
 
 def extract_landmarks(hand_landmarks) -> list:
@@ -121,7 +120,7 @@ def predict_realtime():
     detector = HandLandmarker.create_from_options(options)
 
     cap = cv2.VideoCapture(0)
-    print("\n🎥 Test temps réel — Q pour quitter")
+    print("\nTest temps réel — Q pour quitter")
 
     while True:
         ret, frame = cap.read()
@@ -164,6 +163,6 @@ if __name__ == "__main__":
     model, le = train(X, y)
     save_model(model, le)
 
-    test = input("\n🎥 Tester le modèle en temps réel ? (o/n) : ").strip().lower()
+    test = input("\nTester le modèle en temps réel ? (o/n) : ").strip().lower()
     if test == 'o':
         predict_realtime()
