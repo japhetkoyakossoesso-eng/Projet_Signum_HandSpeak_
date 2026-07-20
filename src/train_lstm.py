@@ -143,7 +143,7 @@ def train_with_tensorflow(X, y, words):
     plt.legend()
     plt.tight_layout()
     plt.savefig("models/training_curves.png", dpi=150)
-    print("   📈 Courbes sauvegardées dans models/")
+    print(" Courbes sauvegardées dans models/")
 
     return model, le
 
@@ -154,8 +154,8 @@ def save_model_tf(model, le):
     model.save(f"{MODEL_PATH}.keras")
     with open(ENCODER_PATH, 'wb') as f:
         pickle.dump(le, f)
-    print(f"\n💾 Modèle LSTM sauvegardé : {MODEL_PATH}.keras")
-    print(f"💾 Encodeur sauvegardé : {ENCODER_PATH}")
+    print(f"\n Modèle LSTM sauvegardé : {MODEL_PATH}.keras")
+    print(f" Encodeur sauvegardé : {ENCODER_PATH}")
 
 
 def predict_realtime_lstm():
