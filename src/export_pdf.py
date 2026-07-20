@@ -1,6 +1,5 @@
 """
 export_pdf.py — Export de l'historique en PDF pour Signum HandSpeak
-Mois 4 : générer un rapport PDF des signes détectés
 
 Usage :
     from src.export_pdf import export_to_pdf
@@ -53,7 +52,7 @@ def export_to_pdf(history: list, path: str = None) -> str:
         bottomMargin=2*cm,
     )
 
-    # ── Styles ───────────────────────────────────────────────────────────
+    #  Styles 
     styles = getSampleStyleSheet()
 
     style_title = ParagraphStyle(
@@ -95,12 +94,12 @@ def export_to_pdf(history: list, path: str = None) -> str:
         alignment=TA_CENTER,
     )
 
-    # ── Contenu ──────────────────────────────────────────────────────────
+    # Contenu 
     content = []
     now = datetime.now().strftime("%d/%m/%Y à %H:%M")
 
     # En-tête
-    content.append(Paragraph("🤟 SIGNUM HANDSPEAK", style_title))
+    content.append(Paragraph("SIGNUM HANDSPEAK", style_title))
     content.append(Paragraph("Traducteur de Langue des Signes Française", style_subtitle))
     content.append(Paragraph(f"Rapport généré le {now}", style_subtitle))
     content.append(Spacer(1, 0.4*cm))
